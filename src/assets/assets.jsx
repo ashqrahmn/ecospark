@@ -74,33 +74,25 @@ export const features = [
   {
     id: 1,
     icon: calender_2,
-    // Original Title: "Free Quote & Instant Pricing"
     title: "Transparent Online Pricing",
-    // Original Desc: "Get instant pricing and get your free quote cleaning all online."
     desc: "Receive a no-obligation quote and see your cleaning price instantly online.",
   },
   {
     id: 2,
     icon: Detergent_bottle,
-    // Original Title: "Equipment & Supplies Provided"
     title: "Fully Equipped Professionals",
-    // Original Desc: "Our cleaners provide all the essential equipment & supplies."
     desc: "We arrive with all the necessary tools and professional-grade supplies.",
   },
   {
     id: 3,
     icon: hand_sparkle,
-    // Original Title: "100% Satisfaction Guarantee"
     title: "Your Happiness, Guaranteed",
-    // Original Desc: "If you’re not happy with your cleaning, we’ll be back to fix the missed areas for free."
     desc: "Not completely satisfied? We'll return to re-clean any missed spots at no charge.",
   },
   {
     id: 4,
     icon: face_green_2,
-    // Original Title: "Vetted & Background Checked Cleaners"
     title: "Trusted & Verified Professionals",
-    // Original Desc: "Our cleaners go through a rigorous hiring process to make sure your home is in safe hands."
     desc: "For your peace of mind, every cleaner undergoes a strict vetting and background check.",
   },
 ];
@@ -235,8 +227,8 @@ export const brandLogos = [
   {
     src: brand1,
     alt: 'Brand Logo 1',
-    width: 140, // Example width
-    height: 40, // Example height
+    width: 140,
+    height: 40,
   },
   {
     src: brand2,
@@ -320,8 +312,8 @@ export const contactInfo = [
   },
   {
     icon: <RiMailLine/>,
-    content: ["contact@Clanyeco.com"],
-    href: "mailto:contact@Clanyeco.com",
+    content: ["contact@ecospark.com"],
+    href: "mailto:contact@ecospark.com",
   },
   
 ];
