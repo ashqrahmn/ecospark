@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Parkinsans:wght@300..800&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-gray-light: #00000099;
+  --color-primary: #F2D701;
+  --color-primary-light: #F4F6F0;
+  --color-secondary: #3CA20C;
+  --color-secondary-light: #E8F5D3;
+  --color-black-light: #0000001A;
+
+  --font-outfit: "Outfit", sans-serif;
+  --font-parkinsans: "Parkinsans", sans-serif;
+  --font-winky: "Winky Sans", sans-serif;
+}
+
+body {
+  font-family: var(--font-outfit);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer utilities {
+  /* Utility for the sloped/curved section */
+  .slope-bottom {
+    @apply overflow-hidden;
+    clip-path: polygon( 87.5% 100%,12.5% 94.722%,12.5% 94.722%,10.473% 94.54%,8.549% 94.014%,6.756% 93.172%,5.118% 92.042%,3.662% 90.654%,2.412% 89.035%,1.395% 87.216%,0.637% 85.223%,0.164% 83.086%,0% 80.833%,0% 13.889%,0% 13.889%,0.164% 11.636%,0.637% 9.499%,1.395% 7.507%,2.412% 5.687%,3.662% 4.068%,5.118% 2.68%,6.756% 1.55%,8.549% 0.708%,10.473% 0.182%,12.5% 0%,87.5% 0%,87.5% 0%,89.527% 0.182%,91.451% 0.708%,93.244% 1.55%,94.882% 2.68%,96.338% 4.068%,97.588% 5.687%,98.605% 7.507%,99.363% 9.499%,99.836% 11.636%,100% 13.889%,100% 86.111%,100% 86.111%,99.836% 88.364%,99.363% 90.501%,98.605% 92.493%,97.588% 94.313%,96.338% 95.932%,94.882% 97.32%,93.244% 98.45%,91.451% 99.292%,89.527% 99.818%,87.5% 100% );
+  }
+
+  /* Utility for hiding scrollbars cross-browser */
+  .custom-scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .custom-scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+}
+
+@keyframes infinite-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-manual-scroll {
+  animation: infinite-scroll 25s linear infinite;
+}
+
+.Toastify__spinner {
+  border-color: #F2D701 !important;
+  border-right-color: transparent !important;
+  
+}
+
+.Toastify__toast-container {
+  width: auto;
+  max-width: 500px;
+}
+
+.Toastify__toast {
+  width: fit-content;
+  min-width: 250px;
+}
+
+@media (max-width: 480px) {
+  .Toastify__toast-container--top-center {
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90vw;
+  }
+
+  .Toastify__toast {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
