@@ -4,15 +4,22 @@ import { assets } from "../assets/assets";
 import { ToastContainer, toast } from "react-toastify";
 
 const Contact = () => {
-
+  // Manages the submit button's tap animation state.
   const [quoteTapped, setQuoteTapped] = useState(false);
+  // Detects if the current device has touch capabilities.
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  // Controls the visibility of the custom service dropdown.
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // Stores the currently selected service from the dropdown.
   const [selectedService, setSelectedService] = useState("");
-  
+  // References the dropdown element to detect outside clicks.
   const dropdownRef = useRef(null);
+  // Manages the state for the numeric-only phone input.
   const [phone, setPhone] = useState("");
+  // Manages the state for the numeric-only area input.
   const [area, setArea] = useState("");
+  // State to manage submission status for the button
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const services = [
     "House Cleaning",
@@ -72,39 +79,56 @@ const Contact = () => {
   // Handles form submission, validation, and API request with toast notifications.
   const onSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
+    const form = event.target;
+    const formData = new FormData(form);
 
-    if (!formData.get("service")) {
+    if (!selectedService && !form.service.value) {
       toast.error("Please select a service.");
       return;
     }
 
+    setIsSubmitting(true);
     formData.append("access_key", API_KEY);
-    const object = Object.fromEntries(formData);
-    const json = JSON.stringify(object);
+    const formJson = Object.fromEntries(formData.entries());
 
-    const promise = fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: json,
-    }).then((res) => res.json());
+    const toastId = toast.loading("Sending your request...");
 
-    toast
-      .promise(promise, {
-        pending: "Sending your request...",
-        success: "Request sent!",
-        error: "Something went wrong, please try again.",
-      })
-      .then((data) => {
-        if (data.success) {
-          event.target.reset();
-          setSelectedService("");
-          setPhone("");
-          setArea("");
-        } else {
-          console.error("Error from Web3Forms:", data);
-        }
+    try {
+      const response = await fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formJson),
       });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Something went wrong.");
+      }
+
+      toast.update(toastId, {
+        render: data.message,
+        type: "success",
+        isLoading: false,
+        autoClose: 5000,
+      });
+
+      form.reset();
+      setSelectedService("");
+      setPhone("");
+      setArea("");
+
+    } catch (error) {
+      console.error("Submission Error:", error);
+      toast.update(toastId, {
+        render: error.message,
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -259,7 +283,7 @@ const Contact = () => {
           <div className="w-full md:w-1/2 h-full flex flex-col gap-5">
             <img
               src={assets.contaxt_image}
-              alt=""
+              alt="Cleaning professionals"
               className="w-full h-auto object-cover rounded-[20px]"
             />
             <div className="relative p-8 bg-primary-light rounded-[20px] overflow-hidden flex flex-col justify-center items-start w-full 2xl:p-12 2xl:rounded-[26px]">
